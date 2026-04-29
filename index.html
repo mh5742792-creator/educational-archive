@@ -3,37 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="الأرشيف الرقمي التعليمي - تطوير محمود حامد">
-    <title>الأرشيف الرقمي | محمود حامد</title>
+    <title>رادار الروابط | البحث المتقدم</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="glass-container">
-        <nav>
-            <div class="logo">محمود حامد</div>
-            <div class="status-badge">مستضاف على GitHub</div>
-        </nav>
-        
+    <div class="app-container">
         <header>
-            <h1>أرشيف المواد التعليمية الذكي</h1>
-            <p>منصة تفاعلية لعرض الملازم والاختبارات باستخدام تقنيات الويب الحديثة.</p>
+            <h1>رادار الروابط المفقودة</h1>
+            <p>نظام استرداد آلي مدعوم بخوادم Google</p>
         </header>
 
         <main>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ابحث عن ملزمة أو درس...">
+            <div class="control-panel">
+                <button id="startBtn" class="btn primary">بدء الفحص الشامل</button>
+                <button id="resetBtn" class="btn secondary">تصفير العداد</button>
             </div>
-            
-            <div class="grid-container" id="lessonsGrid">
-                </div>
-        </main>
 
-        <footer>
-            <div class="footer-content">
-                <p>&copy; 2026 مختبر التحليل الحركي والتعليم الرقمي</p>
+            <div class="progress-wrapper">
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <div class="status-text">
+                    <span id="percentage">0%</span> - <span id="statusMessage">في انتظار الأوامر...</span>
+                </div>
             </div>
-        </footer>
+
+            <div id="resultBox" class="result-box hidden">
+                <h3>النتيجة:</h3>
+                <a id="finalLink" href="#" target="_blank"></a>
+            </div>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
