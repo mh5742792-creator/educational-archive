@@ -1,3 +1,4 @@
+// تم دمج الرابط الخاص بك هنا بنجاح
 const API_URL = "https://script.google.com/macros/s/AKfycbxxq6Rn9NFqzQBU_iEU3Bnh2kw6_rDuIZfKMS_R3ntZnuCH8GF1yXgqUzQnzEXxEo-i/exec";
 
 const startBtn = document.getElementById('startBtn');
@@ -8,32 +9,32 @@ const statusMessage = document.getElementById('statusMessage');
 const resultBox = document.getElementById('resultBox');
 const finalLink = document.getElementById('finalLink');
 
-// عناصر الأرقام الدقيقة
 const totalCountEl = document.getElementById('totalCount');
 const checkedCountEl = document.getElementById('checkedCount');
 const remainingCountEl = document.getElementById('remainingCount');
 
 let isSearching = false;
 
-// دالة لتنسيق الأرقام الطويلة بفواصل (مثل 1,000,000)
 function formatNumber(num) {
     return new Intl.NumberFormat('ar-EG').format(num);
 }
 
-// دالة الاتصال بالخادم
 async function fetchSearchStatus() {
     if (!isSearching) return;
 
     try {
-        const response = await fetch(API_URL);
+        // إضافة { redirect: 'follow' } لحل مشكلة CORS وخطأ الاتصال
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            redirect: 'follow'
+        });
+        
         const data = await response.json();
 
-        // تحديث الأرقام الدقيقة في الواجهة
         totalCountEl.innerText = formatNumber(data.total);
         checkedCountEl.innerText = formatNumber(data.currentIndex);
         remainingCountEl.innerText = formatNumber(data.remaining);
 
-        // حساب النسبة المئوية بدقة 3 أرقام عشرية
         let calcProgress = (data.currentIndex / data.total) * 100;
         let formattedProgress = calcProgress.toFixed(3); 
         
@@ -42,8 +43,7 @@ async function fetchSearchStatus() {
             percentageText.innerText = formattedProgress + "%";
             statusMessage.innerText = "جاري الفحص المتقدم في خوادم جوجل...";
             
-            // استدعاء فوري للحفاظ على سرعة شريط التحميل
-            setTimeout(fetchSearchStatus, 800);
+            setTimeout(fetchSearchStatus, 1000);
             
         } else if (data.status === "found") {
             isSearching = false;
@@ -69,11 +69,10 @@ async function fetchSearchStatus() {
     } catch (error) {
         console.error("خطأ:", error);
         statusMessage.innerText = "محاولة إعادة الاتصال بالخادم...";
-        setTimeout(fetchSearchStatus, 3000); // محاولة التخطي في حال تقطع الإنترنت
+        setTimeout(fetchSearchStatus, 3000); 
     }
 }
 
-// بدء التشغيل
 startBtn.addEventListener('click', () => {
     isSearching = true;
     startBtn.disabled = true;
@@ -83,14 +82,16 @@ startBtn.addEventListener('click', () => {
     fetchSearchStatus();
 });
 
-// تصفير الخادم
 resetBtn.addEventListener('click', async () => {
     isSearching = false;
     startBtn.disabled = true;
     statusMessage.innerText = "جاري مسح ذاكرة الخادم...";
     
     try {
-        const res = await fetch(API_URL + "?action=reset");
+        const res = await fetch(API_URL + "?action=reset", {
+            method: 'GET',
+            redirect: 'follow'
+        });
         const data = await res.json();
         
         totalCountEl.innerText = formatNumber(data.total);
