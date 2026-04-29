@@ -3,33 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رادار الروابط | البحث المتقدم</title>
+    <title>نظام الاختراق الشامل | الاسترداد الدقيق</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
+    <div class="dashboard-container">
         <header>
-            <h1>رادار الروابط المفقودة</h1>
-            <p>نظام استرداد آلي مدعوم بخوادم Google</p>
+            <h1>نظام الفحص الشامل للروابط (V 7.0)</h1>
+            <p>تغطية كاملة بنسبة 100% لجميع التباديل البصرية</p>
         </header>
 
         <main>
-            <div class="control-panel">
-                <button id="startBtn" class="btn primary">بدء الفحص الشامل</button>
-                <button id="resetBtn" class="btn secondary">تصفير العداد</button>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-title">الإجمالي (Y)</span>
+                    <span class="stat-value" id="totalCount">0</span>
+                </div>
+                <div class="stat-box highlight">
+                    <span class="stat-title">تم فحص (X)</span>
+                    <span class="stat-value" id="checkedCount">0</span>
+                </div>
+                <div class="stat-box warning">
+                    <span class="stat-title">المتبقي (Z)</span>
+                    <span class="stat-value" id="remainingCount">0</span>
+                </div>
             </div>
 
-            <div class="progress-wrapper">
+            <div class="progress-section">
                 <div class="progress-bar-container">
                     <div id="progressBar" class="progress-bar"></div>
                 </div>
-                <div class="status-text">
-                    <span id="percentage">0%</span> - <span id="statusMessage">في انتظار الأوامر...</span>
+                <div class="progress-details">
+                    <span id="percentageText" class="percentage-text">0.000%</span>
+                    <span id="statusMessage" class="status-msg">الخادم في وضع الاستعداد...</span>
                 </div>
             </div>
 
+            <div class="control-panel">
+                <button id="startBtn" class="btn primary">بدء الفحص الدقيق</button>
+                <button id="resetBtn" class="btn secondary">تصفير العدادات</button>
+            </div>
+
             <div id="resultBox" class="result-box hidden">
-                <h3>النتيجة:</h3>
+                <h3>تم العثور على الرابط بنجاح!</h3>
                 <a id="finalLink" href="#" target="_blank"></a>
             </div>
         </main>
