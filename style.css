@@ -24,7 +24,7 @@ body {
     padding: 2.5rem;
     border-radius: 16px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    width: 90%;
+    width: 95%;
     max-width: 700px;
 }
 
@@ -51,7 +51,7 @@ header p { margin: 0.5rem 0 0; color: var(--text-muted); }
 .stat-box.warning { border-color: var(--warning); }
 
 .stat-title { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-.stat-value { display: block; font-size: 1.4rem; font-weight: bold; color: var(--text-main); letter-spacing: 1px; }
+.stat-value { display: block; font-size: 1.2rem; font-weight: bold; color: var(--text-main); }
 
 .progress-section { margin-bottom: 2rem; }
 
@@ -70,7 +70,6 @@ header p { margin: 0.5rem 0 0; color: var(--text-muted); }
     width: 0%;
     background-color: var(--primary);
     transition: width 0.3s linear;
-    box-shadow: 0 0 10px var(--primary);
 }
 
 .progress-details { display: flex; justify-content: space-between; align-items: center; }
@@ -87,14 +86,11 @@ header p { margin: 0.5rem 0 0; color: var(--text-muted); }
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    font-family: inherit;
 }
 
 .btn.primary { background: var(--primary); color: white; }
-.btn.primary:hover { background: #2563eb; transform: translateY(-2px); }
 .btn.secondary { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); }
-.btn.secondary:hover { background: #334155; color: white; }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .result-box {
     margin-top: 2rem;
@@ -106,5 +102,4 @@ header p { margin: 0.5rem 0 0; color: var(--text-muted); }
 }
 
 .result-box.hidden { display: none; }
-.result-box h3 { color: var(--success); margin-top: 0; }
-#finalLink { color: var(--success); font-weight: bold; text-decoration: underline; word-break: break-all; }
+#finalLink { color: var(--success); font-weight: bold; word-break: break-all; }
