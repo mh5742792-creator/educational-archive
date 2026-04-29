@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروع محمود التعليمي</title>
+    <meta name="description" content="الأرشيف الرقمي التعليمي - تطوير محمود حامد">
+    <title>الأرشيف الرقمي | محمود حامد</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>مرحباً بكم في أرشيفي التعليمي</h1>
-            <p>هذا الموقع مستضاف مجاناً على GitHub Pages</p>
-        </header>
+    <div class="glass-container">
+        <nav>
+            <div class="logo">محمود حامد</div>
+            <div class="status-badge">مستضاف على GitHub</div>
+        </nav>
         
+        <header>
+            <h1>أرشيف المواد التعليمية الذكي</h1>
+            <p>منصة تفاعلية لعرض الملازم والاختبارات باستخدام تقنيات الويب الحديثة.</p>
+        </header>
+
         <main>
-            <section id="content">
-                <h2>حول المشروع</h2>
-                <p>أقوم هنا برفع الدروس والملازم التفاعلية للطلاب.</p>
-                <button id="btn-click">اضغط هنا للتفاعل</button>
-                <p id="message"></p>
-            </section>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث عن ملزمة أو درس...">
+            </div>
+            
+            <div class="grid-container" id="lessonsGrid">
+                </div>
         </main>
 
         <footer>
-            <p>تم التطوير بواسطة محمود - 2026</p>
+            <div class="footer-content">
+                <p>&copy; 2026 مختبر التحليل الحركي والتعليم الرقمي</p>
+            </div>
         </footer>
     </div>
     <script src="script.js"></script>
