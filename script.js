@@ -1,17 +1,26 @@
-// ضع رابط تطبيق الويب الخاص بجوجل هنا بين علامتي التنصيص
-const API_URL = "https://script.google.com/macros/s/AKfycbxxq6Rn9NFqzQBU_iEU3Bnh2kw6_rDuIZfKMS_R3ntZnuCH8GF1yXgqUzQnzEXxEo-i/exec";
+const API_URL = "YOUR_WEB_APP_URL_HERE";
 
 const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const progressBar = document.getElementById('progressBar');
-const percentageText = document.getElementById('percentage');
+const percentageText = document.getElementById('percentageText');
 const statusMessage = document.getElementById('statusMessage');
 const resultBox = document.getElementById('resultBox');
 const finalLink = document.getElementById('finalLink');
 
+// عناصر الأرقام الدقيقة
+const totalCountEl = document.getElementById('totalCount');
+const checkedCountEl = document.getElementById('checkedCount');
+const remainingCountEl = document.getElementById('remainingCount');
+
 let isSearching = false;
 
-// دالة البحث المتكررة
+// دالة لتنسيق الأرقام الطويلة بفواصل (مثل 1,000,000)
+function formatNumber(num) {
+    return new Intl.NumberFormat('ar-EG').format(num);
+}
+
+// دالة الاتصال بالخادم
 async function fetchSearchStatus() {
     if (!isSearching) return;
 
@@ -19,21 +28,30 @@ async function fetchSearchStatus() {
         const response = await fetch(API_URL);
         const data = await response.json();
 
+        // تحديث الأرقام الدقيقة في الواجهة
+        totalCountEl.innerText = formatNumber(data.total);
+        checkedCountEl.innerText = formatNumber(data.currentIndex);
+        remainingCountEl.innerText = formatNumber(data.remaining);
+
+        // حساب النسبة المئوية بدقة 3 أرقام عشرية
+        let calcProgress = (data.currentIndex / data.total) * 100;
+        let formattedProgress = calcProgress.toFixed(3); 
+        
         if (data.status === "searching") {
-            // تحديث شريط التحميل والنسبة
-            progressBar.style.width = data.progress + "%";
-            percentageText.innerText = data.progress + "%";
-            statusMessage.innerText = `تم فحص ${data.currentIndex} من أصل ${data.total} احتمال...`;
+            progressBar.style.width = calcProgress + "%";
+            percentageText.innerText = formattedProgress + "%";
+            statusMessage.innerText = "جاري الفحص المتقدم في خوادم جوجل...";
             
-            // طلب دورة جديدة بعد ثانية واحدة لمنع الضغط على الخادم
-            setTimeout(fetchSearchStatus, 1000);
+            // استدعاء فوري للحفاظ على سرعة شريط التحميل
+            setTimeout(fetchSearchStatus, 800);
             
         } else if (data.status === "found") {
             isSearching = false;
             progressBar.style.width = "100%";
             progressBar.style.backgroundColor = "var(--success)";
-            percentageText.innerText = "100%";
-            statusMessage.innerText = "اكتشاف ناجح!";
+            percentageText.innerText = "100.000%";
+            percentageText.style.color = "var(--success)";
+            statusMessage.innerText = "تمت المهمة بنجاح!";
             
             finalLink.href = data.link;
             finalLink.innerText = data.link;
@@ -43,42 +61,48 @@ async function fetchSearchStatus() {
         } else if (data.status === "finished") {
             isSearching = false;
             progressBar.style.width = "100%";
-            percentageText.innerText = "100%";
-            statusMessage.innerText = data.message;
+            percentageText.innerText = "100.000%";
+            statusMessage.innerText = "انتهت جميع الاحتمالات الممكنة. الملف محذوف نهائياً.";
             startBtn.disabled = false;
         }
 
     } catch (error) {
-        console.error("خطأ في الاتصال:", error);
-        statusMessage.innerText = "حدث خطأ في الاتصال، جاري المحاولة مجدداً...";
-        setTimeout(fetchSearchStatus, 3000);
+        console.error("خطأ:", error);
+        statusMessage.innerText = "محاولة إعادة الاتصال بالخادم...";
+        setTimeout(fetchSearchStatus, 3000); // محاولة التخطي في حال تقطع الإنترنت
     }
 }
 
-// زر البدء
+// بدء التشغيل
 startBtn.addEventListener('click', () => {
     isSearching = true;
     startBtn.disabled = true;
     resultBox.classList.add('hidden');
-    statusMessage.innerText = "بدء تهيئة الخادم وإرسال الطلبات...";
+    statusMessage.innerText = "جاري إنشاء قناة الاتصال...";
     progressBar.style.backgroundColor = "var(--primary)";
     fetchSearchStatus();
 });
 
-// زر التصفير
+// تصفير الخادم
 resetBtn.addEventListener('click', async () => {
     isSearching = false;
     startBtn.disabled = true;
-    statusMessage.innerText = "جاري تصفير الخادم...";
+    statusMessage.innerText = "جاري مسح ذاكرة الخادم...";
     
     try {
-        await fetch(API_URL + "?action=reset");
+        const res = await fetch(API_URL + "?action=reset");
+        const data = await res.json();
+        
+        totalCountEl.innerText = formatNumber(data.total);
+        checkedCountEl.innerText = "0";
+        remainingCountEl.innerText = formatNumber(data.total);
+        
         progressBar.style.width = "0%";
-        percentageText.innerText = "0%";
-        statusMessage.innerText = "تم التصفير بنجاح. مستعد للبدء.";
+        percentageText.innerText = "0.000%";
+        statusMessage.innerText = "النظام جاهز لبدء دورة فحص جديدة.";
         resultBox.classList.add('hidden');
     } catch (err) {
-        statusMessage.innerText = "فشل في التصفير.";
+        statusMessage.innerText = "خطأ أثناء التصفير، تأكد من اتصالك.";
     }
     
     startBtn.disabled = false;
