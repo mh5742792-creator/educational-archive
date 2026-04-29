@@ -1,4 +1,4 @@
-const API_URL = "YOUR_WEB_APP_URL_HERE";
+const API_URL = "https://script.google.com/macros/s/AKfycbxxq6Rn9NFqzQBU_iEU3Bnh2kw6_rDuIZfKMS_R3ntZnuCH8GF1yXgqUzQnzEXxEo-i/exec";
 
 const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
